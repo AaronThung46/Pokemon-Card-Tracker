@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pokémon Card Price Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <h1 class="logo">Pokémon Card Tracker</h1>
+      <p class="tagline">Real-time price volatility &amp; market trends</p>
+    </header>
+
+    <main class="main">
+      <section class="section add-sets-section">
+        <h2>Add more sets</h2>
+        <p class="hint">Import cards and prices from any Pokémon TCG set. New sets will appear in the search filter.</p>
+        <div class="add-sets-bar">
+          <select id="availableSets">
+            <option value="">Choose a set to import…</option>
+          </select>
+          <input type="number" id="importLimit" placeholder="Limit (optional)" min="1" max="500" title="Max cards to import (blank = full set)" />
+          <button type="button" id="importSetBtn">Import set</button>
+        </div>
+        <p id="importStatus" class="import-status"></p>
+      </section>
+
+      <section class="section search-section">
+        <div class="search-bar">
+          <input type="text" id="searchInput" placeholder="Search cards by name..." autocomplete="off" />
+          <select id="setFilter">
+            <option value="">All sets</option>
+          </select>
+          <button type="button" id="searchBtn">Search</button>
+        </div>
+        <div id="searchResults" class="card-grid"></div>
+        <div id="searchPagination" class="pagination"></div>
+      </section>
+
+      <section class="section chart-section">
+        <h2>Price History</h2>
+        <p class="hint">Select a card from search or your watchlist to view price volatility.</p>
+        <div class="chart-controls">
+          <select id="priceSource">
+            <option value="tcg_market">TCGPlayer Market (USD)</option>
+            <option value="tcg_low">TCGPlayer Low (USD)</option>
+            <option value="cm_trend">Cardmarket Trend (EUR)</option>
+            <option value="cm_avg">Cardmarket Avg (EUR)</option>
+          </select>
+          <select id="daysFilter">
+            <option value="7">Last 7 days</option>
+            <option value="30">Last 30 days</option>
+            <option value="">All time</option>
+          </select>
+          <button type="button" id="refreshPrices">Refresh price</button>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="priceChart" aria-label="Price history chart"></canvas>
+        </div>
+        <p id="chartCardName" class="chart-card-name"></p>
+      </section>
+
+      <section class="section watchlist-section">
+        <h2>Watchlists</h2>
+        <div class="watchlist-toolbar">
+          <input type="text" id="newWatchlistName" placeholder="New watchlist name" />
+          <button type="button" id="createWatchlist">Create</button>
+        </div>
+        <div id="watchlistTabs" class="watchlist-tabs"></div>
+        <div id="watchlistCards" class="card-grid"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Data from <a href="https://tcgdex.dev" target="_blank" rel="noopener">TCGdex</a>. Prices: TCGPlayer (USD) &amp; Cardmarket (EUR).</p>
+    </footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

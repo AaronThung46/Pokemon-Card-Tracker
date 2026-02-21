@@ -1,0 +1,486 @@
+/* Pokémon Card Tracker – responsive layout & theme */
+:root {
+  --bg: #0f0f12;
+  --surface: #18181c;
+  --surface2: #222228;
+  --border: #2e2e36;
+  --text: #e4e4e7;
+  --textMuted: #a1a1aa;
+  --accent: #22c55e;
+  --accentHover: #16a34a;
+  --danger: #ef4444;
+  --chartLine: #22c55e;
+  --radius: 10px;
+  --font: "DM Sans", system-ui, sans-serif;
+  --fontMono: "JetBrains Mono", monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.tagline {
+  margin: 0.25rem 0 0;
+  color: var(--textMuted);
+  font-size: 0.95rem;
+}
+
+.main {
+  flex: 1;
+  padding: 2rem 0;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.section h2 {
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.hint {
+  color: var(--textMuted);
+  font-size: 0.875rem;
+  margin: 0 0 1rem;
+}
+
+/* Search */
+/* Add sets */
+.add-sets-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.add-sets-bar select {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.95rem;
+}
+
+.add-sets-bar input[type="number"] {
+  width: 6rem;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.95rem;
+}
+
+.add-sets-bar button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #0f0f12;
+  font-family: var(--font);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.add-sets-bar button:hover {
+  background: var(--accentHover);
+}
+
+.add-sets-bar button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.import-status {
+  font-size: 0.875rem;
+  color: var(--textMuted);
+  margin: 0;
+}
+
+.import-status.success {
+  color: var(--accent);
+}
+
+.import-status.error {
+  color: var(--danger);
+}
+
+.search-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-bar input[type="text"] {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.95rem;
+}
+
+.search-bar input::placeholder {
+  color: var(--textMuted);
+}
+
+.search-bar select {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.95rem;
+  min-width: 140px;
+}
+
+.search-bar button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #0f0f12;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background: var(--accentHover);
+}
+
+/* Card grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+}
+
+.card-tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.card-tile:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.card-tile.selected {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.card-tile img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  background: var(--surface2);
+}
+
+.card-tile .name {
+  padding: 0.5rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-tile .card-price {
+  padding: 0 0.6rem 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.card-tile .meta {
+  padding: 0 0.6rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--textMuted);
+}
+
+.card-tile .actions {
+  padding: 0 0.6rem 0.6rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.card-tile .btn-sm {
+  padding: 0.3rem 0.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-family: var(--font);
+  cursor: pointer;
+  background: var(--surface2);
+  color: var(--text);
+}
+
+.card-tile .btn-sm:hover {
+  background: var(--accent);
+  color: #0f0f12;
+}
+
+.card-tile .btn-sm.remove {
+  background: transparent;
+  color: var(--textMuted);
+}
+
+.card-tile .btn-sm.remove:hover {
+  background: var(--danger);
+  color: #fff;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.pagination button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  cursor: pointer;
+}
+
+.pagination button:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  font-size: 0.875rem;
+  color: var(--textMuted);
+}
+
+/* Chart */
+.chart-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.chart-controls select {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+}
+
+.chart-controls button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--surface2);
+  color: var(--text);
+  font-family: var(--font);
+  cursor: pointer;
+}
+
+.chart-controls button:hover {
+  background: var(--accent);
+  color: #0f0f12;
+}
+
+.chart-wrap {
+  position: relative;
+  height: 280px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1rem;
+  border: 1px solid var(--border);
+}
+
+#priceChart {
+  max-height: 100%;
+}
+
+.chart-card-name {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--textMuted);
+}
+
+/* Watchlists */
+.watchlist-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.watchlist-toolbar input {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  min-width: 180px;
+}
+
+.watchlist-toolbar button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #0f0f12;
+  font-family: var(--font);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.watchlist-toolbar button:hover {
+  background: var(--accentHover);
+}
+
+.watchlist-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.watchlist-tab {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  cursor: pointer;
+}
+
+.watchlist-tab:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.watchlist-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #0f0f12;
+}
+
+.watchlist-tab .delete-tab {
+  margin-left: 0.5rem;
+  opacity: 0.7;
+  font-size: 0.9em;
+}
+
+.watchlist-tab .delete-tab:hover {
+  opacity: 1;
+  color: var(--danger);
+}
+
+.footer {
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--textMuted);
+}
+
+.footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+/* Empty / loading */
+.empty-msg {
+  color: var(--textMuted);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .app {
+    padding: 0.75rem;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+
+  .chart-wrap {
+    height: 220px;
+  }
+}
